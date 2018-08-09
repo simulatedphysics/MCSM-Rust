@@ -1,0 +1,6 @@
+[package]
+name = "sp"
+version = "0.1.0"
+authors = ["jwdeitch <jwdeitch@gmail.com>"]
+
+[dependencies]
