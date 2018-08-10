@@ -8,7 +8,7 @@ mod models {
     impl IsingSpin {
         pub fn new() -> IsingSpin {
             let mut rng = rand::thread_rng();
-            IsingSpin { value: (rng.gen_range(0, 2)) > 1 }
+            IsingSpin { value: (rng.gen_range(0, 2)) % 1 }
         }
     }
 
