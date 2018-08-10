@@ -1,7 +1,6 @@
 use models;
 
 mod models {
-
     struct Spin {
         x: f64,
         y: f64,
@@ -52,10 +51,14 @@ mod models {
     }
 
     impl Heisenberg {
+        fn new(system_size: i32) {
+            let mut spin_configuration_temp: Vec<Spin> = Vec::new();
 
+            for _i in 0..system_size {
+                spin_configuration_temp.push(Spin::normalized_spin(&mut Spin::new()));
+            }
+        }
     }
-
-
 
     impl Model for Heisenberg {
         fn swap() {
