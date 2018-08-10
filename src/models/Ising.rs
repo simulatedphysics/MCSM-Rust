@@ -6,37 +6,16 @@ mod models {
     }
 
     impl IsingSpin {
-        pub fn create_random_ising_spin() -> IsingSpin {
+        pub fn new() -> IsingSpin {
             let mut rng = rand::thread_rng();
-            IsingSpin { value: (rng.gen_range(0, 2) * 2 - 1) as bool }
-        }
-    }
-
-    impl Sub<IsingSpin> for IsingSpin {
-        type Output = Self;
-        fn sub(self, other: IsingSpin) -> Self {
-            IsingSpin { value: self.value - other.value }
-        }
-    }
-
-    impl Mul<IsingSpin> for IsingSpin {
-        type Output = Self;
-        fn mul(self, other: IsingSpin) -> Self {
-            IsingSpin { value: self.value * other.value }
-        }
-    }
-
-    impl Mul<f64> for IsingSpin {
-        type Output = Self;
-        fn mul(self, constant: f64) -> Self {
-            IsingSpin { value: self.value * constant }
+            IsingSpin { value: (rng.gen_range(0, 2)) > 1 }
         }
     }
 
     impl Neg for IsingSpin {
         type Output = Self;
         fn neg(self) -> Self {
-            IsingSpin { value: -self.value }
+            IsingSpin { value: !self.value }
         }
     }
 
