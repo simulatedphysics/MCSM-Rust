@@ -1,9 +1,14 @@
 use models;
 
 mod models {
-    struct Heisenberg {}
 
-    impl Heisenberg {
+    struct Spin {
+        x: f64,
+        y: f64,
+        z: f64,
+    }
+
+    impl Spin {
         fn new() -> Spin {
             let mut rng = rand::thread_rng();
             Spin { x: rng.gen::<f64>(), y: rng.gen::<f64>(), z: rng.gen::<f64>() }
@@ -41,6 +46,15 @@ mod models {
             write!(f, "({},{},{})", self.x, self.y, self.z)
         }
     }
+
+    struct Heisenberg {
+        spin_configuration: Vec<Spin>
+    }
+
+    impl Heisenberg {
+
+    }
+
 
 
     impl Model for Heisenberg {
