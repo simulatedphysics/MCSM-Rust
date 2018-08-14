@@ -1,6 +1,7 @@
-mod models;
 use models;
 
 fn main() {
-    ising :IsingModel = models::
+    models::HeisenbergSpin::new();
+
+    println!("Hello, world!");
 }

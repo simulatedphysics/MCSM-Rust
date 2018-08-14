@@ -1,6 +1,7 @@
-use models;
-
 mod models {
+    extern crate rand;
+    use rand::Rng;
+
     struct HeisenbergSpin {
         x: f64,
         y: f64,
