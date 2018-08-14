@@ -12,16 +12,9 @@ mod lattice {
     }
 
 
-    trait Lattice {
         type Sites = Vec<Site>;
+    trait Lattice: Debug {
         fn get_neighbors(s: Site) -> Vec<Site>;
-    }
-
-    mod structures {
-        struct Kagome {}
-
-        struct Square {}
-
-        struct Triangular {}
+        fn new(n_x_size: usize, n_y_size: usize);
     }
 }
