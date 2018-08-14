@@ -1,3 +1,5 @@
+mod heisenberg;
+
 mod models {
 
     pub struct Observables{

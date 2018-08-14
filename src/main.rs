@@ -1,4 +1,4 @@
-use models;
+mod models;
 
 fn main() {
     models::HeisenbergSpin::new();

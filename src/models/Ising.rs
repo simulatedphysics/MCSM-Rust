@@ -46,7 +46,7 @@ mod models {
 
     impl Model for Ising {
         fn swap() {
-            implement!();
+            unimplemented!();
         }
 
         fn energy() -> f64{
@@ -66,7 +66,7 @@ mod models {
         }
 
         fn lattice() {
-            implement!();
+            unimplemented!();
         }
     }
 }
