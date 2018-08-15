@@ -1,8 +1,8 @@
 extern crate rand;
 use std::fmt;
 use std::ops::{Sub, Div};
-use models;
 use self::rand::Rng;
+use models::Model;
 
 pub struct HeisenbergSpin {
     x: f64,
@@ -63,7 +63,7 @@ impl Heisenberg {
     }
 }
 
-impl models::models::Model for Heisenberg {
+impl Model for Heisenberg {
     fn swap() {
         unimplemented!();
     }

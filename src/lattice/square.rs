@@ -1,11 +1,11 @@
-use lattice::{Lattice};
+use lattice::{Lattice, Site};
 
 struct Square{
 
 }
 
 impl Lattice for Square {
-    fn new(n_x: i32, n_y: i32) -> Lattice {
+    fn new(n_x: i32, n_y: i32) -> Vec<Site> {
         let mut lat: Vec<Site> = Vec::new();
         for j in 0..n_y {
             for i in 0..n_x {
