@@ -9,6 +9,8 @@ use std::f64;
 use models::{Model, Observables};
 use self::num_complex::Complex;
 use self::rulinalg::matrix::{Matrix, BaseMatrix};
+mod models;
+
 
 pub struct ExchangeMatrix {
     pub exchange_matrix: Matrix<f64>
@@ -126,7 +128,7 @@ impl Model for Heisenberg {
         unimplemented!();
     }
 
-    fn measure() -> Observables {
+    fn measure() -> models::Observables {
         unimplemented!();
     }
 }

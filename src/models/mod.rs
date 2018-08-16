@@ -1,3 +1,5 @@
+use lattice;
+
 pub struct Observables {
     pub average_energy: f64,
     pub average_magneitzation: f64,
@@ -8,7 +10,7 @@ pub struct Observables {
 pub trait Model {
     fn swap(&mut self) -> &Self;
     fn get_energy(&self) -> f64;
-    fn get_lattice(&self) -> Lattice;
+    fn get_lattice(&self) -> Box<lattice::Lattice>;
     fn measure() -> Observables;
 }
 
