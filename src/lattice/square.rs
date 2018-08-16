@@ -5,14 +5,14 @@ struct Square{
 }
 
 impl Lattice for Square {
-    fn new(&mut self, n_x: i32, n_y: i32) -> Square {
-//        let mut lat: Vec<Site> = Vec::new();
+    fn new(n_x: i32, n_y: i32) -> Square {
+        let mut lat: Vec<Site> = Vec::new();
         for j in 0..n_y {
             for i in 0..n_x {
-                self.lat.push(Site { x: i as f64, y: j as f64, z: 0.0 });
+                lat.push(Site { x: i as f64, y: j as f64, z: 0.0 });
             }
         }
-        Square { lat: self.lat}
+        Square { lat}
     }
 
 //    fn get_neighbors() -> Vec<Site>{
