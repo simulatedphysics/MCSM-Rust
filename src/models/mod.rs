@@ -11,5 +11,5 @@ pub trait Model {
     fn lattice(&self);
 }
 
-mod ising;
-mod heisenberg;
+//mod ising;
+//mod heisenberg;

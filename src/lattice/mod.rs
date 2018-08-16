@@ -8,13 +8,13 @@ pub struct Site {
 }
 
 
-type Sites = Vec<Site>;
+//type Sites = Vec<Site>;
 
 pub trait Lattice {
     fn new(n_x: i32, n_y: i32) -> Self;
 //    fn get_neighbors(s: Site) -> Vec<Site>;
 }
 
-mod square;
-mod triangular;
-mod kagome;
+pub mod square;
+//mod triangular;
+//mod kagome;

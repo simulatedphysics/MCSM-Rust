@@ -1,2 +1,2 @@
-mod lattice;
+pub mod lattice;
 //mod models;

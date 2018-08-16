@@ -1,9 +1,10 @@
 extern crate rand;
+//extern crate lattice;
 use std::fmt;
 use std::ops::{Sub, Div, Neg};
 use models::Model;
 use self::rand::Rng;
-use lattice::Lattice;
+use lattice;
 
 
 struct IsingSpin {
