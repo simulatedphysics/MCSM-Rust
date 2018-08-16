@@ -23,19 +23,8 @@ impl ExchangeMatrix {
         ExchangeMatrix { exchange_matrix: Matrix::new(n, n, (1..(n.pow(2) + 1)).map(|_v| 1 as f64).collect::<Vec<f64>>()) }
     }
 
-    pub fn select_mat(&mut self, r: usize, c: usize) -> f64 {
+    pub fn select_mat(&self, r: usize, c: usize) -> f64 {
         self.exchange_matrix.select(&[r], &[c]).data()[0]
-    }
-
-    pub fn calculate_energy(&mut self, heisenberg: Heisenberg) -> f64 {
-        let mut energy: f64 = 0.0;
-
-        for i in 0..10 {
-            for j in 0..10 {
-                energy += (heisenberg.spin_configuration[i]).dot(heisenberg.spin_configuration[j]) * self.select_mat(i, j)
-            }
-        }
-        energy
     }
 }
 
@@ -96,6 +85,7 @@ impl fmt::Display for HeisenbergSpin {
 struct Heisenberg {
     spin_configuration: Vec<HeisenbergSpin>,
     system_size: i32,
+    exchange_matrix: ExchangeMatrix,
 }
 
 impl Heisenberg {
@@ -105,7 +95,9 @@ impl Heisenberg {
             spin_configuration.push(HeisenbergSpin::new().normalize());
         }
 
-        return Heisenberg { spin_configuration, system_size };
+        let exchange_matrix = ExchangeMatrix::ferromagnetic_exchange(10);
+
+        return Heisenberg { spin_configuration, system_size, exchange_matrix };
     }
 }
 
@@ -119,7 +111,15 @@ impl Model for Heisenberg {
     }
 
     fn get_energy(&self) -> f64 {
-        unimplemented!();
+        let mut energy: f64 = 0.0;
+
+        for i in 0..10 {
+            for j in 0..10 {
+                energy += (self.spin_configuration[i]).dot(self.spin_configuration[j]) * self.exchange_matrix.select_mat(i, j)
+            }
+        }
+
+        return energy;
     }
 
     fn get_lattice(&self) -> Lattice {
