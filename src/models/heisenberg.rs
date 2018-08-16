@@ -17,7 +17,7 @@ impl HeisenbergSpin {
         HeisenbergSpin { x: rng.gen::<f64>(), y: rng.gen::<f64>(), z: rng.gen::<f64>() }
     }
 
-    fn normalized_spin(&mut self) -> HeisenbergSpin {
+    fn normalize(&mut self) -> HeisenbergSpin {
         let normalization = (self.x.powf(2.0) + self.y.powf(2.0) + self.z.powf(2.0)).sqrt();
         self.x /= normalization;
         self.y /= normalization;
@@ -59,7 +59,7 @@ impl Heisenberg {
     fn new(system_size: i32) -> Heisenberg {
         let mut spin_configuration: Vec<HeisenbergSpin> = Vec::new();
         for _i in 0..system_size {
-            spin_configuration.push(HeisenbergSpin::normalized_spin(&mut HeisenbergSpin::new()));
+            spin_configuration.push(HeisenbergSpin::new().normalize());
         }
 
         return Heisenberg { spin_configuration, system_size };
@@ -67,17 +67,19 @@ impl Heisenberg {
 }
 
 impl Model for Heisenberg {
-    fn swap(&mut self) {
+    fn swap(&mut self) -> Self {
         let mut rng = rand::thread_rng();
         self.spin_configuration[rng.gen_range(0, self.system_size - 1)] =
-            HeisenbergSpin::normalized_spin(&mut HeisenbergSpin::new())
+            HeisenbergSpin::new().normalize();
+
+        return self;
     }
 
-    fn energy(&self) {
+    fn energy(&self) -> f64 {
         unimplemented!();
     }
 
-    fn lattice(&self) {
+    fn lattice(&self) -> Lattice {
         unimplemented!();
     }
 }
