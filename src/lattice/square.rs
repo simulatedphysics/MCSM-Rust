@@ -1,6 +1,6 @@
 use lattice::{Lattice, Site};
 
-struct Square {
+pub struct Square {
     lat: Vec<Site>
 }
 
