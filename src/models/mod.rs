@@ -6,7 +6,7 @@ pub struct Observables {
 }
 
 pub trait Model {
-    fn swap(&self) -> self;
+    fn swap(&mut self) -> &Self;
     fn get_energy(&self) -> f64;
     fn get_lattice(&self) -> Lattice;
     fn measure() -> Observables;

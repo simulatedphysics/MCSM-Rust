@@ -1,9 +1,12 @@
 extern crate rand;
+
+
 use std::fmt;
-use std::ops::{Sub, Div, Neg};
-use models::Model;
+use std::ops::Neg;
+use models::{Model, Observables};
 use self::rand::Rng;
-use lattice::Lattice;
+
+use ::lattice::Lattice;
 
 
 struct IsingSpin {
@@ -30,45 +33,39 @@ impl fmt::Display for IsingSpin {
     }
 }
 
-#[derive(Clone)]
+//#[derive(Clone)]
 struct Ising {
     spin_configuration: Vec<IsingSpin>
 }
 
 impl Ising {
-    fn new() -> Ising {
+    fn new(n_x: i32, n_y: i32) -> Ising {
         let mut square_lattice = Lattice::generate_square_lattice(n_x, n_y);
         let neighbor_number = 2;
-        let mut ising_spin_configuration: Vec<IsingSpin> = Vec::new();
+        let mut spin_configuration: Vec<IsingSpin> = Vec::new();
 
-        for _i in 0..n {
-            ising_spin_configuration.push(IsingSpin::create_random_ising_spin());
+        for _i in 0..n_x * n_y {
+            spin_configuration.push(IsingSpin::new());
         }
-        Ising { spin_configuration: ising_spin_configuration }
+
+        Ising { spin_configuration }
     }
 }
 
 impl Model for Ising {
-    fn swap() {
+    fn swap(&mut self) -> &Self {
         unimplemented!();
     }
 
-    fn energy() -> f64 {
-        let j_eng = 1.0;
-        let mut energy_total = 0.0;
-
-        for site_index in 0..spin_configuration.spin_configuration.len() {
-            let site_spin: IsingSpin = spin_configuration.spin_configuration[site_index];
-            let list_of_neighbors: Vec<Site> = Lattice::neighbor_list(square_lattice.lattice[site_index].x as i32, square_lattice.lattice[site_index].y as i32, n_x, n_y);
-
-            for i in 0..neighbor_number {
-                energy_total += (-j_eng) * site_spin.spin_value * spin_configuration.spin_configuration[Lattice::map_to_index(list_of_neighbors[i].x as i32, list_of_neighbors[i].y as i32, n_x) as usize].spin_value
-            }
-        }
-        energy_total
+    fn get_energy(&self) -> f64 {
+        unimplemented!();
     }
 
-    fn lattice() {
+    fn get_lattice(&self) -> Lattice {
+        unimplemented!();
+    }
+
+    fn measure() -> Observables {
         unimplemented!();
     }
 }

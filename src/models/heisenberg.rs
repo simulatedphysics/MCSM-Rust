@@ -3,7 +3,7 @@ extern crate rand;
 use std::fmt;
 use std::ops::{Sub, Div};
 use self::rand::Rng;
-use models::Model;
+use models::{Model, Observables};
 
 pub struct HeisenbergSpin {
     x: f64,
@@ -67,19 +67,23 @@ impl Heisenberg {
 }
 
 impl Model for Heisenberg {
-    fn swap(&mut self) -> Self {
+    fn swap(&mut self) -> &Self {
         let mut rng = rand::thread_rng();
-        self.spin_configuration[rng.gen_range(0, self.system_size - 1)] =
+        self.spin_configuration[rng.gen_range(0, self.system_size - 1) as usize] =
             HeisenbergSpin::new().normalize();
 
         return self;
     }
 
-    fn energy(&self) -> f64 {
+    fn get_energy(&self) -> f64 {
         unimplemented!();
     }
 
-    fn lattice(&self) -> Lattice {
+    fn get_lattice(&self) -> Lattice {
+        unimplemented!();
+    }
+
+    fn measure() -> Observables {
         unimplemented!();
     }
 }
