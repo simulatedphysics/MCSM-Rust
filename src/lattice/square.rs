@@ -1,6 +1,6 @@
 use lattice::{Lattice, Site};
 
-struct Square{
+struct Square {
     lat: Vec<Site>
 }
 
@@ -12,7 +12,7 @@ impl Lattice for Square {
                 lat.push(Site { x: i as f64, y: j as f64, z: 0.0 });
             }
         }
-        Square { lat}
+        Square { lat }
     }
 
 //    fn get_neighbors() -> Vec<Site>{

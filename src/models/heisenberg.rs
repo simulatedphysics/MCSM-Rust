@@ -70,7 +70,7 @@ impl Model for Heisenberg {
     fn swap(&mut self) {
         let mut rng = rand::thread_rng();
         self.spin_configuration[rng.gen_range(0, self.system_size - 1)] =
-            HeisenbergSpin::normalized_spin(HeisenbergSpin::new())
+            HeisenbergSpin::normalized_spin(&mut HeisenbergSpin::new())
     }
 
     fn energy(&self) {
