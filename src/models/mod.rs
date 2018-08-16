@@ -6,9 +6,9 @@ pub struct Observables {
 }
 
 pub trait Model {
-    fn swap();
-    fn energy();
-    fn lattice();
+    fn swap(&self);
+    fn energy(&self);
+    fn lattice(&self);
 }
 
 mod ising;

@@ -1,4 +1,5 @@
 extern crate rand;
+
 use std::fmt;
 use std::ops::{Sub, Div};
 use self::rand::Rng;
@@ -50,29 +51,31 @@ impl fmt::Display for HeisenbergSpin {
 }
 
 struct Heisenberg {
-    spin_configuration: Vec<HeisenbergSpin>
+    spin_configuration: Vec<HeisenbergSpin>,
+    system_size: i32,
 }
 
 impl Heisenberg {
-    fn new(system_size: i32) {
-        let mut spin_configuration_temp: Vec<HeisenbergSpin> = Vec::new();
-
+    fn new(system_size: i32) -> Heisenberg {
+        let mut spin_configuration: Vec<HeisenbergSpin> = Vec::new();
         for _i in 0..system_size {
-            spin_configuration_temp.push(HeisenbergSpin::normalized_spin(&mut HeisenbergSpin::new()));
+            spin_configuration.push(HeisenbergSpin::normalized_spin(&mut HeisenbergSpin::new()));
         }
+
+        return Heisenberg { spin_configuration, system_size };
     }
 }
 
 impl Model for Heisenberg {
-    fn swap() {
+    fn swap(&self) {
         unimplemented!();
     }
 
-    fn energy() {
+    fn energy(&self) {
         unimplemented!();
     }
 
-    fn lattice() {
+    fn lattice(&self) {
         unimplemented!();
     }
 }
