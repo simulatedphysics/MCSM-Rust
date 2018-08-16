@@ -1,7 +1,7 @@
 use lattice::{Lattice, Site};
 
 pub struct Square {
-    lat: Vec<Site>
+    pub lat: Vec<Site>
 }
 
 impl Lattice for Square {

@@ -1,5 +1,7 @@
 //pub trait Occupant {}
+use std::fmt;
 
+#[derive(Clone)]
 pub struct Site {
     x: f64,
     y: f64,
@@ -7,6 +9,11 @@ pub struct Site {
 //    occupant: Option<Occupant>,
 }
 
+impl fmt::Display for Site {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "({}, {}, {})", self.x, self.y, self.z)
+    }
+}
 
 //type Sites = Vec<Site>;
 
