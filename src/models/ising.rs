@@ -1,11 +1,9 @@
 extern crate rand;
 
-
 use std::fmt;
 use std::ops::Neg;
 use models::{Model, Observables};
 use self::rand::Rng;
-
 use ::lattice::Lattice;
 
 
@@ -53,15 +51,15 @@ impl Ising {
 }
 
 impl Model for Ising {
+    fn get_lattice(&self) -> Lattice {
+        unimplemented!();
+    }
+
     fn swap(&mut self) -> &Self {
         unimplemented!();
     }
 
     fn get_energy(&self) -> f64 {
-        unimplemented!();
-    }
-
-    fn get_lattice(&self) -> Lattice {
         unimplemented!();
     }
 

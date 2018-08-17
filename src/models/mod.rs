@@ -8,9 +8,9 @@ pub struct Observables {
 }
 
 pub trait Model {
+    fn get_lattice(&self) -> Box<lattice::Lattice>;
     fn swap(&mut self) -> &Self;
     fn get_energy(&self) -> f64;
-    fn get_lattice(&self) -> Box<lattice::Lattice>;
     fn measure() -> Observables;
 }
 

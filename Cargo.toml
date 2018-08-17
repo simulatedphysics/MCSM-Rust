@@ -1,7 +1,7 @@
 [package]
 name = "sp"
 version = "0.1.0"
-authors = ["jwdeitch <jwdeitch@gmail.com>"]
+authors = ["jwdeitch <jwdeitch@gmail.com>", "obrienpja <obrienpja@gmail.com>"]
 
 [dependencies]
 rand = "0.5.3"
