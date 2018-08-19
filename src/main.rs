@@ -15,4 +15,7 @@ fn main() {
 
 //    let new_obs = models::Observables
     println!("Ising spin is: {}", IsingSpin::new())
+
+//    let hb = models::
+
 }

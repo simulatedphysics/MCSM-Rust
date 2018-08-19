@@ -5,12 +5,11 @@ extern crate rulinalg;
 use std::fmt;
 use std::ops::{Sub, Div};
 use self::rand::Rng;
+use lattice::Lattice;
 use std::f64;
 use models::{Model, Observables};
 use self::num_complex::Complex;
 use self::rulinalg::matrix::{Matrix, BaseMatrix};
-mod models;
-
 
 pub struct ExchangeMatrix {
     pub exchange_matrix: Matrix<f64>
@@ -33,7 +32,7 @@ impl ExchangeMatrix {
 
 impl ExchangeMatrix {
     pub fn phase_factor(pt: HeisenbergSpin, pt2: HeisenbergSpin) -> Complex<f64> {
-        let phase: Complex<f64> = self::f64::consts::PI * Complex::i() * pt.dot(pt2);
+        let phase: Complex<f64> = self::f64::consts::PI * Complex::i() * pt.dot(&pt2);
         phase.exp()
     }
 }
@@ -51,15 +50,15 @@ impl HeisenbergSpin {
         HeisenbergSpin { x: rng.gen::<f64>(), y: rng.gen::<f64>(), z: rng.gen::<f64>() }
     }
 
-    fn normalize(&mut self) -> HeisenbergSpin {
+    fn normalize(&mut self) -> &Self {
         let normalization = (self.x.powf(2.0) + self.y.powf(2.0) + self.z.powf(2.0)).sqrt();
         self.x /= normalization;
         self.y /= normalization;
         self.z /= normalization;
-        *self
+        return self;
     }
 
-    fn dot(self, second_spin: HeisenbergSpin) -> f64 {
+    fn dot(&self, second_spin: &HeisenbergSpin) -> f64 {
         self.x * second_spin.x + self.y * second_spin.y + self.z * second_spin.z
     }
 }
@@ -93,8 +92,10 @@ struct Heisenberg {
 impl Heisenberg {
     fn new(system_size: i32) -> Heisenberg {
         let mut spin_configuration: Vec<HeisenbergSpin> = Vec::new();
+
         for _i in 0..system_size {
-            spin_configuration.push(HeisenbergSpin::new().normalize());
+            let mut h = HeisenbergSpin::new(); h.normalize();
+            spin_configuration.push(h);
         }
 
         let exchange_matrix = ExchangeMatrix::ferromagnetic_exchange(10);
@@ -106,8 +107,9 @@ impl Heisenberg {
 impl Model for Heisenberg {
     fn swap(&mut self) -> &Self {
         let mut rng = rand::thread_rng();
+        let mut h = HeisenbergSpin::new(); h.normalize();
         self.spin_configuration[rng.gen_range(0, self.system_size - 1) as usize] =
-            HeisenbergSpin::new().normalize();
+            h;
 
         return self;
     }
@@ -117,18 +119,18 @@ impl Model for Heisenberg {
 
         for i in 0..10 {
             for j in 0..10 {
-                energy += (self.spin_configuration[i]).dot(self.spin_configuration[j]) * self.exchange_matrix.select_mat(i, j)
+                energy += (&self.spin_configuration[i]).dot(&self.spin_configuration[j]) * self.exchange_matrix.select_mat(i, j)
             }
         }
 
         return energy;
     }
 
-    fn get_lattice(&self) -> Lattice {
+    fn get_lattice(&self) -> Box<Lattice> {
         unimplemented!();
     }
 
-    fn measure() -> models::Observables {
+    fn measure() -> Observables {
         unimplemented!();
     }
 }
