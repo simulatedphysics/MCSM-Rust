@@ -38,14 +38,14 @@ impl ExchangeMatrix {
 }
 
 
-pub struct HeisenbergSpin<'a> {
+pub struct HeisenbergSpin {
     x: f64,
     y: f64,
     z: f64,
 }
 
-impl<'a> HeisenbergSpin<'a> {
-    fn new() -> HeisenbergSpin<'a> {
+impl HeisenbergSpin {
+    fn new() -> HeisenbergSpin {
         let mut rng = rand::thread_rng();
         HeisenbergSpin { x: rng.gen::<f64>(), y: rng.gen::<f64>(), z: rng.gen::<f64>() }
     }
@@ -63,51 +63,53 @@ impl<'a> HeisenbergSpin<'a> {
     }
 }
 
-impl<'a> Div<f64> for HeisenbergSpin<'a> {
+impl Div<f64> for HeisenbergSpin {
     type Output = Self;
     fn div(self, denom: f64) -> Self {
         HeisenbergSpin { x: self.x / denom, y: self.y / denom, z: self.z / denom }
     }
 }
 
-impl<'a> Sub<HeisenbergSpin<'a>> for HeisenbergSpin<'a> {
+impl Sub<HeisenbergSpin> for HeisenbergSpin {
     type Output = Self;
     fn sub(self, other: HeisenbergSpin) -> Self {
         HeisenbergSpin { x: self.x - other.x, y: self.y - other.y, z: self.z - other.z }
     }
 }
 
-impl<'a> fmt::Display for HeisenbergSpin<'a> {
+impl fmt::Display for HeisenbergSpin {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "({},{},{})", self.x, self.y, self.z)
     }
 }
 
-struct Heisenberg<'a> {
-    spin_configuration: Vec<&'a HeisenbergSpin<'a>>,
+struct Heisenberg {
+    spin_configuration: Vec<HeisenbergSpin>,
     system_size: i32,
     exchange_matrix: ExchangeMatrix,
 }
 
-impl<'a> Heisenberg<'a> {
-    fn new(system_size: i32) -> &'a Heisenberg<'a> {
-        let mut spin_configuration: Vec<&HeisenbergSpin> = Vec::new();
+impl Heisenberg {
+    fn new(system_size: i32) -> Heisenberg {
+        let mut spin_configuration: Vec<HeisenbergSpin> = Vec::new();
 
         for _i in 0..system_size {
-            spin_configuration.push(&HeisenbergSpin::new().normalize());
+            let mut h = HeisenbergSpin::new(); h.normalize();
+            spin_configuration.push(h);
         }
 
         let exchange_matrix = ExchangeMatrix::ferromagnetic_exchange(10);
 
-        return &Heisenberg { spin_configuration, system_size, exchange_matrix };
+        return Heisenberg { spin_configuration, system_size, exchange_matrix };
     }
 }
 
-impl<'a> Model for Heisenberg<'a> {
+impl Model for Heisenberg {
     fn swap(&mut self) -> &Self {
         let mut rng = rand::thread_rng();
+        let mut h = HeisenbergSpin::new(); h.normalize();
         self.spin_configuration[rng.gen_range(0, self.system_size - 1) as usize] =
-            HeisenbergSpin::new().normalize();
+            h;
 
         return self;
     }
@@ -117,7 +119,7 @@ impl<'a> Model for Heisenberg<'a> {
 
         for i in 0..10 {
             for j in 0..10 {
-                energy += (&self.spin_configuration[i]).dot(self.spin_configuration[j]) * self.exchange_matrix.select_mat(i, j)
+                energy += (&self.spin_configuration[i]).dot(&self.spin_configuration[j]) * self.exchange_matrix.select_mat(i, j)
             }
         }
 
