@@ -38,14 +38,14 @@ impl ExchangeMatrix {
 }
 
 
-pub struct HeisenbergSpin {
+pub struct HeisenbergSpin<'a> {
     x: f64,
     y: f64,
     z: f64,
 }
 
-impl HeisenbergSpin {
-    fn new() -> HeisenbergSpin {
+impl<'a> HeisenbergSpin<'a> {
+    fn new() -> HeisenbergSpin<'a> {
         let mut rng = rand::thread_rng();
         HeisenbergSpin { x: rng.gen::<f64>(), y: rng.gen::<f64>(), z: rng.gen::<f64>() }
     }
@@ -63,28 +63,28 @@ impl HeisenbergSpin {
     }
 }
 
-impl Div<f64> for HeisenbergSpin {
+impl<'a> Div<f64> for HeisenbergSpin<'a> {
     type Output = Self;
     fn div(self, denom: f64) -> Self {
         HeisenbergSpin { x: self.x / denom, y: self.y / denom, z: self.z / denom }
     }
 }
 
-impl Sub<HeisenbergSpin> for HeisenbergSpin {
+impl<'a> Sub<HeisenbergSpin<'a>> for HeisenbergSpin<'a> {
     type Output = Self;
     fn sub(self, other: HeisenbergSpin) -> Self {
         HeisenbergSpin { x: self.x - other.x, y: self.y - other.y, z: self.z - other.z }
     }
 }
 
-impl fmt::Display for HeisenbergSpin {
+impl<'a> fmt::Display for HeisenbergSpin<'a> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "({},{},{})", self.x, self.y, self.z)
     }
 }
 
 struct Heisenberg<'a> {
-    spin_configuration: Vec<&'a HeisenbergSpin>,
+    spin_configuration: Vec<&'a HeisenbergSpin<'a>>,
     system_size: i32,
     exchange_matrix: ExchangeMatrix,
 }
