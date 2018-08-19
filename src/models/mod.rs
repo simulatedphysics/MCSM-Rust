@@ -14,5 +14,5 @@ pub trait Model {
     fn measure() -> Observables;
 }
 
-//mod ising;
+pub mod ising;
 //mod heisenberg;

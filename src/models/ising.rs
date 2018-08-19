@@ -4,10 +4,11 @@ use std::fmt;
 use std::ops::Neg;
 use models::{Model, Observables};
 use self::rand::Rng;
-use ::lattice::Lattice;
+use lattice::Lattice;
 
 
-struct IsingSpin {
+#[derive(Clone)]
+pub struct IsingSpin {
     value: f64
 }
 
@@ -31,27 +32,27 @@ impl fmt::Display for IsingSpin {
     }
 }
 
-//#[derive(Clone)]
+#[derive(Clone)]
 struct Ising {
     spin_configuration: Vec<IsingSpin>
 }
 
 impl Ising {
-    fn new(n_x: i32, n_y: i32) -> Ising {
-        let mut square_lattice = Lattice::generate_square_lattice(n_x, n_y);
-        let neighbor_number = 2;
-        let mut spin_configuration: Vec<IsingSpin> = Vec::new();
-
-        for _i in 0..n_x * n_y {
-            spin_configuration.push(IsingSpin::new());
-        }
-
-        Ising { spin_configuration }
-    }
+//    fn new(n_x: i32, n_y: i32) -> Ising {
+//        let mut square_lattice = Lattice::generate_square_lattice(n_x, n_y);
+//        let neighbor_number = 2;
+//        let mut spin_configuration: Vec<IsingSpin> = Vec::new();
+//
+//        for _i in 0..n_x * n_y {
+//            spin_configuration.push(IsingSpin::new());
+//        }
+//
+//        Ising { spin_configuration }
+//    }
 }
 
 impl Model for Ising {
-    fn get_lattice(&self) -> Lattice {
+    fn get_lattice(&self) -> Box<Lattice> {
         unimplemented!();
     }
 
