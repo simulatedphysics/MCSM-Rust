@@ -16,4 +16,4 @@ pub trait Model {
 }
 
 pub mod ising;
-//mod heisenberg;
+mod heisenberg;
