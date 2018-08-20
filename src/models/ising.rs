@@ -37,26 +37,21 @@ struct Ising {
     spin_configuration: Vec<IsingSpin>
 }
 
-impl Ising {
-//    fn new(n_x: i32, n_y: i32) -> Ising {
-//        let mut square_lattice = Lattice::generate_square_lattice(n_x, n_y);
-//        let neighbor_number = 2;
-//        let mut spin_configuration: Vec<IsingSpin> = Vec::new();
-//
-//        for _i in 0..n_x * n_y {
-//            spin_configuration.push(IsingSpin::new());
-//        }
-//
-//        Ising { spin_configuration }
-//    }
-}
-
 impl Model for Ising {
-    fn get_lattice(&self) -> Box<Lattice> {
+    fn initialize_lattice(&self) -> Box<Lattice> {
         unimplemented!();
     }
 
-    fn swap(&mut self) -> &Self {
+    fn initialize_spin_configuration() -> IsingSpinConfiguration{
+        let mut ising_spin_configuration:Vec<IsingSpin> = Vec::new();
+
+        for _i in 0..n{
+            ising_spin_configuration.push(IsingSpin::create_random_ising_spin());
+        }
+        IsingSpinConfiguration{spin_configuration: ising_spin_configuration}
+    }
+
+    fn flip_spin(&mut self) -> &Self {
         unimplemented!();
     }
 

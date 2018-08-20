@@ -8,8 +8,9 @@ pub struct Observables {
 }
 
 pub trait Model {
-    fn get_lattice(&self) -> Box<lattice::Lattice>;
-    fn swap(&mut self) -> &Self;
+    fn initialize_lattice(&self) -> Box<lattice::Lattice>;
+    fn initialize_spin_configuration();
+    fn flip_spin(&mut self) -> &Self;
     fn get_energy(&self) -> f64;
     fn measure() -> Observables;
 }
