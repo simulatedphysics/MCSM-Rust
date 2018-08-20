@@ -5,7 +5,7 @@ extern crate rulinalg;
 use std::fmt;
 use std::ops::{Sub, Div};
 use self::rand::Rng;
-use lattice::Lattice;
+use lattice::LatticeObject;
 use std::f64;
 use models::{Model, Observables};
 use self::num_complex::Complex;
@@ -105,7 +105,7 @@ impl Heisenberg {
 }
 
 impl Model for Heisenberg {
-    fn swap(&mut self) -> &Self {
+    fn flip_spin(&mut self) -> &Self {
         let mut rng = rand::thread_rng();
         let mut h = HeisenbergSpin::new(); h.normalize();
         self.spin_configuration[rng.gen_range(0, self.system_size - 1) as usize] =
@@ -126,7 +126,7 @@ impl Model for Heisenberg {
         return energy;
     }
 
-    fn get_lattice(&self) -> Box<Lattice> {
+    fn new(L: LatticeObject) -> Self {
         unimplemented!();
     }
 

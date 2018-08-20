@@ -1,4 +1,4 @@
-use lattice;
+use lattice::LatticeObject;
 
 pub struct Observables {
     pub average_energy: f64,
@@ -8,8 +8,7 @@ pub struct Observables {
 }
 
 pub trait Model {
-    fn initialize_lattice(&self) -> Box<lattice::Lattice>;
-    fn initialize_spin_configuration();
+    fn new(l: LatticeObject) -> Self where Self: Sized;
     fn flip_spin(&mut self) -> &Self;
     fn get_energy(&self) -> f64;
     fn measure() -> Observables;
