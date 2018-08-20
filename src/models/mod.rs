@@ -8,7 +8,7 @@ pub struct Observables {
 }
 
 pub trait Model {
-    fn new(l: LatticeObject) -> Self where Self: Sized;
+    fn new(l: LatticeObject) -> Self;
     fn flip_spin(&mut self) -> &Self;
     fn get_energy(&self) -> f64;
     fn measure() -> Observables;
