@@ -17,11 +17,6 @@ pub struct Chart {
     pub plot_type: String,
 }
 
-trait Plot {
-    fn get_plot() -> Chart;
-}
-
-
 pub fn write_plot(observables: Vec<Observables>) {
     let mut file = File::create("plots/data.json").unwrap();
     write!(file, "{}", serde_json::to_string(&chart).unwrap());
