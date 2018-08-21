@@ -4,7 +4,7 @@ use std::fmt;
 use std::ops::Neg;
 use models::{Model, Observables};
 use self::rand::Rng;
-use lattice::LatticeObject;
+use lattice::Lattice;
 
 
 #[derive(Clone)]
@@ -38,7 +38,7 @@ struct Ising {
 }
 
 impl Model for Ising {
-    fn new(l: LatticeObject) -> Self {
+    fn new<L: Lattice>(l: L) -> Self {
         let mut ising_spin_configuration: Vec<IsingSpin> = Vec::new();
 
 //        for _i in 0 .. len(l) {

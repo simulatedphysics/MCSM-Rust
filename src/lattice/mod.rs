@@ -1,8 +1,6 @@
 //pub trait Occupant {}
 use std::fmt;
 
-pub type LatticeObject = Box<Lattice>;
-
 #[derive(Clone)]
 pub struct Site {
     x: f64,
