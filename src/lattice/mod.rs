@@ -1,12 +1,13 @@
 //pub trait Occupant {}
 use std::fmt;
+use models::ising::IsingSpin;
 
 #[derive(Clone)]
 pub struct Site {
     x: f64,
     y: f64,
     z: f64,
-//    occupant: Option<Occupant>,
+    occupant: Option<IsingSpin>,
 }
 
 impl fmt::Display for Site {
@@ -19,7 +20,7 @@ impl fmt::Display for Site {
 
 pub trait Lattice {
     fn new(n_x: i32, n_y: i32) -> Self where Self: Sized;
-//    fn get_neighbors(s: Site) -> Vec<Site>;
+    fn get_neighbors(s: Site) -> Vec<Site>;
 }
 
 pub mod square;
