@@ -1,7 +1,8 @@
 use lattice::{Lattice, Site};
+use std::rc::Rc;
 
-pub struct Square<'a> {
-    sites: Vec<Site<'a>>,
+pub struct Square {
+    sites: Vec<Site>,
     x_width: i32,
     y_width: i32,
 }
@@ -18,9 +19,9 @@ pub struct Square<'a> {
 //    }
 //}
 
-impl<'a> Lattice for Square<'a> {
-    fn new(x_width: i32, y_width: i32) -> Square<'a> {
-        let mut sites: Vec<Site<'a>> = Vec::with_capacity((x_width * y_width) as usize);
+impl Lattice for Square {
+    fn new(x_width: i32, y_width: i32) -> Square {
+        let mut sites: Vec<Site> = Vec::with_capacity((x_width * y_width) as usize);
         for j in 0..y_width {
             for i in 0..x_width {
                 sites.push(
