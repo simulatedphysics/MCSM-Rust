@@ -1,21 +1,20 @@
 mod models;
 mod lattice;
 
+use models::Model;
 
-use lattice::{Lattice, Site, square};
-use models::ising::{IsingSpin};
-//
+use lattice::{Lattice, square};
+
+
 fn main() {
     let lat: square::Square = Lattice::new(4, 4);
 
-//    for i in 0..16 {
-//        let site: Site = lat.sites[i].clone();
-//        println!("The site of the lattice is: {}", site);
-//    }
+    println!("{}", lat);
 
-//    let new_obs = models::Observables
-//    println!("Ising spin is: {}", IsingSpin::new())
+    let mut model: models::ising::Ising = models::Model::new(lat);
 
-//    let hb = models::
-
+    for _ in 0..10 {
+        model.flip_spin();
+        println!("{}", model.get_energy());
+    }
 }

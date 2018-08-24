@@ -33,7 +33,7 @@ impl fmt::Display for IsingSpin {
 }
 
 #[derive(Clone)]
-struct Ising {
+pub struct Ising {
     spin_configuration: Vec<IsingSpin>
 }
 
@@ -59,7 +59,7 @@ impl Model for Ising {
         unimplemented!();
     }
 
-    fn measure() -> Observables {
+    fn measure(&self) -> Observables {
         unimplemented!();
     }
 }

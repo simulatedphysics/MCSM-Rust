@@ -130,7 +130,7 @@ impl Model for Heisenberg {
         unimplemented!();
     }
 
-    fn measure() -> Observables {
+    fn measure(&self) -> Observables {
         unimplemented!();
     }
 }
