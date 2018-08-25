@@ -5,7 +5,9 @@ use std::fmt;
 use std::cell::RefCell;
 
 pub struct Square {
-    sites: Vec<Rc<Site>>
+    sites: Vec<Rc<Site>>,
+    x_width: i32,
+    y_width: i32,
 }
 
 impl Lattice for Square {
@@ -35,7 +37,11 @@ impl Lattice for Square {
             }
         }
 
-        return Square { sites };
+        return Square { sites, x_width, y_width };
+    }
+
+    fn get_area(self: &Self) -> i32 {
+        return self.y_width * self.y_width;
     }
 
     fn get_neighbors(self: &Self, site: Site) -> RefCell<Vec<Weak<Site>>> {

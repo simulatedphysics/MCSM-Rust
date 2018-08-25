@@ -11,6 +11,7 @@ use models::{Model, Observables};
 use self::num_complex::Complex;
 use self::rulinalg::matrix::{Matrix, BaseMatrix};
 
+#[derive(Clone)]
 pub struct ExchangeMatrix {
     pub exchange_matrix: Matrix<f64>
 }
@@ -37,7 +38,7 @@ impl ExchangeMatrix {
     }
 }
 
-
+#[derive(Clone)]
 pub struct HeisenbergSpin {
     x: f64,
     y: f64,
@@ -83,33 +84,20 @@ impl fmt::Display for HeisenbergSpin {
     }
 }
 
-struct Heisenberg {
+#[derive(Clone)]
+pub struct Heisenberg {
     spin_configuration: Vec<HeisenbergSpin>,
     system_size: i32,
     exchange_matrix: ExchangeMatrix,
 }
 
-impl Heisenberg {
-    fn new(system_size: i32) -> Heisenberg {
-        let mut spin_configuration: Vec<HeisenbergSpin> = Vec::new();
-
-        for _i in 0..system_size {
-            let mut h = HeisenbergSpin::new(); h.normalize();
-            spin_configuration.push(h);
-        }
-
-        let exchange_matrix = ExchangeMatrix::ferromagnetic_exchange(10);
-
-        return Heisenberg { spin_configuration, system_size, exchange_matrix };
-    }
-}
 
 impl Model for Heisenberg {
     fn flip_spin(&mut self) -> &Self {
         let mut rng = rand::thread_rng();
-        let mut h = HeisenbergSpin::new(); h.normalize();
-        self.spin_configuration[rng.gen_range(0, self.system_size - 1) as usize] =
-            h;
+        let mut h = HeisenbergSpin::new();
+        h.normalize();
+        self.spin_configuration[rng.gen_range(0, self.system_size - 1) as usize] = h;
 
         return self;
     }
@@ -127,7 +115,17 @@ impl Model for Heisenberg {
     }
 
     fn new<L: Lattice>(l: L) -> Self {
-        unimplemented!();
+        let mut spin_configuration: Vec<HeisenbergSpin> = Vec::new();
+
+        for _i in 0..l.get_area() {
+            let mut h = HeisenbergSpin::new();
+            h.normalize();
+            spin_configuration.push(h);
+        }
+
+        let exchange_matrix = ExchangeMatrix::ferromagnetic_exchange(10);
+
+        return Heisenberg { spin_configuration, system_size: l.get_area(), exchange_matrix };
     }
 
     fn measure(&self) -> Observables {
