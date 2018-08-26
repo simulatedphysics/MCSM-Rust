@@ -92,7 +92,7 @@ pub struct Heisenberg {
 }
 
 
-impl Model for Heisenberg {
+impl<'a> Model<'a> for Heisenberg {
     fn flip_spin(&mut self) -> &Self {
         let mut rng = rand::thread_rng();
         let mut h = HeisenbergSpin::new();
@@ -114,7 +114,7 @@ impl Model for Heisenberg {
         return energy;
     }
 
-    fn new<L: Lattice>(l: L) -> Self {
+    fn new<L: Lattice>(l: &'a L) -> Self {
         let mut spin_configuration: Vec<HeisenbergSpin> = Vec::new();
 
         for _i in 0..l.get_area() {

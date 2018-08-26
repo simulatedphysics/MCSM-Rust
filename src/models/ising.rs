@@ -33,20 +33,20 @@ impl fmt::Display for IsingSpin {
 }
 
 #[derive(Clone)]
-pub struct Ising {
-    spin_configuration: Vec<IsingSpin>
+pub struct Ising<'a> {
+    spin_configuration: Vec<IsingSpin>,
+    lattice: &'a Lattice,
 }
 
-impl Model for Ising {
-    fn new<L: Lattice>(l: L) -> Self {
-        let mut ising_spin_configuration: Vec<IsingSpin> = Vec::new();
+impl<'a> Model<'a> for Ising<'a> {
+    fn new<L: Lattice>(lattice: &'a L) -> Self {
+        let mut spin_configuration: Vec<IsingSpin> = Vec::new();
 
-//        for _i in 0 .. len(l) {
-        for _i in 0..10 {
-            ising_spin_configuration.push(IsingSpin::new());
+        for _i in 0..lattice.get_area() {
+            spin_configuration.push(IsingSpin::new());
         }
 
-        let mut i: Ising = Ising { spin_configuration: ising_spin_configuration };
+        let mut i: Ising = Ising { spin_configuration, lattice };
 
         return i;
     }

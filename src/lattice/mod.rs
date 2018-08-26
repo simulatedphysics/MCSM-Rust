@@ -1,6 +1,6 @@
 use std::fmt;
 use models::ising::IsingSpin;
-use std::rc::Weak;
+use std::rc::{Weak, Rc};
 use std::cell::RefCell;
 
 
@@ -22,6 +22,7 @@ impl fmt::Display for Site {
 pub trait Lattice: fmt::Display {
     fn new(n_x: i32, n_y: i32) -> Self where Self: Sized;
     fn get_area(self: &Self) -> i32;
+    fn get_sites(self: &Self) -> &Vec<Rc<Site>>;
     fn get_neighbors(self: &Self, s: Site) -> RefCell<Vec<Weak<Site>>>;
 }
 

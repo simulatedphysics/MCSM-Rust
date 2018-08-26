@@ -10,13 +10,14 @@ fn main() {
 
     hb();
 
+    ising();
 }
 
 fn hb() {
     let lat2: square::Square = Lattice::new(4, 4);
-    let mut hb: models::heisenberg::Heisenberg = models::heisenberg::Heisenberg::new(lat2);
+    let mut hb: models::heisenberg::Heisenberg = models::heisenberg::Heisenberg::new(&lat2);
 
-    for _ in 0..100000 {
+    for _ in 0..1000 {
         let mut active_hb = hb.clone();
 
         let pre_flip_energy = active_hb.get_energy();
@@ -33,8 +34,9 @@ fn hb() {
 
 fn ising() {
     let lat: square::Square = Lattice::new(4, 4);
-    
+
     println!("{}", lat);
 
-    let mut model: models::ising::Ising = models::Model::new(lat);
+    let mut model: models::ising::Ising = models::Model::new(&lat);
+
 }

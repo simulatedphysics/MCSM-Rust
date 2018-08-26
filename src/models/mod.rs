@@ -7,8 +7,8 @@ pub struct Observables {
     pub heat_capacity: f64,
 }
 
-pub trait Model {
-    fn new<L: Lattice>(l: L) -> Self where Self: Sized;
+pub trait Model<'a> {
+    fn new<L: Lattice>(l: &'a L) -> Self where Self: Sized;
     fn flip_spin(&mut self) -> &Self;
     fn get_energy(&self) -> f64;
     fn measure(&self) -> Observables;

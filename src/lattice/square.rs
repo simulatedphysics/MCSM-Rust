@@ -44,6 +44,10 @@ impl Lattice for Square {
         return self.y_width * self.y_width;
     }
 
+    fn get_sites(self: &Self) -> &Vec<Rc<Site>> {
+        return &self.sites;
+    }
+
     fn get_neighbors(self: &Self, site: Site) -> RefCell<Vec<Weak<Site>>> {
         return site.neighbors;
     }
