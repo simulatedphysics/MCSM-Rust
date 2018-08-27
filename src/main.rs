@@ -1,6 +1,12 @@
+extern crate serde;
+extern crate serde_json;
+#[macro_use]
+extern crate serde_derive;
+
+
 mod models;
 mod lattice;
-
+mod plot;
 use models::Model;
 
 use lattice::{Lattice, square};
