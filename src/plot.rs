@@ -6,11 +6,11 @@ use serde_json;
 use models::Observables;
 
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct CartesianPoint {
-    pub x: f64,
-    pub y: f64,
-    pub z: Option<f64>,
+    pub x: Option<f64>,
+    pub y: Option<f64>,
+    pub z: f64,
 }
 
 #[derive(Serialize, Deserialize, Debug)]

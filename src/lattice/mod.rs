@@ -2,14 +2,14 @@ use std::fmt;
 use models::ising::IsingSpin;
 use std::rc::{Weak, Rc};
 use std::cell::RefCell;
-
+use plot::CartesianPoint;
 
 #[derive(Clone)]
 pub struct Site {
     x: f64,
     y: f64,
     z: f64,
-    occupant: Option<IsingSpin>,
+    occupant: Option<CartesianPoint>,
     neighbors: RefCell<Vec<Weak<Site>>>,
 }
 
