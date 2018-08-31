@@ -56,7 +56,11 @@ impl<'a> Model<'a> for Ising<'a> {
     }
 
     fn get_energy(&self) -> f64 {
-        unimplemented!();
+        for site in self.lattice.get_sites() {
+            println!("{}", site.get_neighbors())
+        }
+
+        return 10.0;
     }
 
     fn measure(&self) -> Observables {

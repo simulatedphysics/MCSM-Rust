@@ -48,9 +48,6 @@ impl Lattice for Square {
         return &self.sites;
     }
 
-    fn get_neighbors(self: &Self, site: Site) -> RefCell<Vec<Weak<Site>>> {
-        return site.neighbors;
-    }
 }
 
 impl fmt::Display for Square {
