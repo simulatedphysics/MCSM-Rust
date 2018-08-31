@@ -5,8 +5,9 @@ extern crate rulinalg;
 use std::fmt;
 use std::ops::{Sub, Div};
 use self::rand::Rng;
-use lattice::Lattice;
+use lattice::{Lattice, Spin};
 use std::f64;
+use plot::CartesianPoint;
 use models::{Model, Observables};
 use self::num_complex::Complex;
 use self::rulinalg::matrix::{Matrix, BaseMatrix};
@@ -71,6 +72,16 @@ impl Div<f64> for HeisenbergSpin {
     }
 }
 
+impl Spin for HeisenbergSpin {
+    fn get_cartesian_point(self: &Self) -> CartesianPoint {
+        return CartesianPoint {
+            x: Some(self.x),
+            y: Some(self.y),
+            z: self.z,
+        };
+    }
+}
+
 impl Sub<HeisenbergSpin> for HeisenbergSpin {
     type Output = Self;
     fn sub(self, other: HeisenbergSpin) -> Self {
@@ -117,10 +128,10 @@ impl<'a> Model<'a> for Heisenberg {
     fn new<L: Lattice>(l: &'a L) -> Self {
         let mut spin_configuration: Vec<HeisenbergSpin> = Vec::new();
 
-        for _i in 0..l.get_area() {
+        for site in l.get_sites() {
             let mut h = HeisenbergSpin::new();
             h.normalize();
-            spin_configuration.push(h);
+            site.set_occupant(h)
         }
 
         let exchange_matrix = ExchangeMatrix::ferromagnetic_exchange(10);

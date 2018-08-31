@@ -9,13 +9,20 @@ pub struct Site {
     x: f64,
     y: f64,
     z: f64,
-    occupant: Option<CartesianPoint>,
+    occupant: Option<Spin>,
     neighbors: RefCell<Vec<Weak<Site>>>,
+}
+
+pub trait Spin: ?Sized {
+    fn get_cartesian_point(self: &Self) -> CartesianPoint;
 }
 
 impl Site {
     pub fn get_neighbors(self: &Self) -> RefCell<Vec<Weak<Site>>> {
         return self.neighbors;
+    }
+    pub fn set_occupant(self: &mut Self, point: CartesianPoint) {
+        self.occupant = Some(point)
     }
 }
 
