@@ -57,7 +57,7 @@ impl<'a> Model<'a> for Ising<'a> {
 
     fn get_energy(&self) -> f64 {
         for site in self.lattice.get_sites() {
-            println!("{}", site.get_neighbors())
+//            println!("{}", site.get_neighbors())
         }
 
         return 10.0;
