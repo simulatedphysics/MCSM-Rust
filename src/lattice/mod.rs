@@ -4,12 +4,11 @@ use std::rc::{Weak, Rc};
 use std::cell::RefCell;
 use plot::CartesianPoint;
 
-#[derive(Clone)]
 pub struct Site {
     x: f64,
     y: f64,
     z: f64,
-    occupant: Option<Spin>,
+    occupant: Option<Box<Spin>>,
     neighbors: RefCell<Vec<Weak<Site>>>,
 }
 
@@ -19,9 +18,11 @@ pub trait Spin {
 
 impl Site {
     pub fn get_neighbors(self: &Self) -> RefCell<Vec<Weak<Site>>> {
-        return self.neighbors;
+        unimplemented!()
+//        return self.neighbors;
     }
-    pub fn set_occupant(self: &mut Self, spin: Spin) {
+
+    pub fn set_occupant(self: &mut Self, spin: Box<Spin>) {
         self.occupant = Some(spin)
     }
 }

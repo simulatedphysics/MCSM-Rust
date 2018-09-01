@@ -131,7 +131,7 @@ impl<'a> Model<'a> for Heisenberg {
         for site in l.get_sites() {
             let mut h = HeisenbergSpin::new();
             h.normalize();
-            site.set_occupant(h)
+//            site.set_occupant(Box::new(h))
         }
 
         let exchange_matrix = ExchangeMatrix::ferromagnetic_exchange(10);
