@@ -14,7 +14,7 @@ use lattice::{Lattice, square};
 
 fn main() {
 
-    hb();
+//    hb();
 
     ising();
 }

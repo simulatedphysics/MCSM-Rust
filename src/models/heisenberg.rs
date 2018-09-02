@@ -127,11 +127,12 @@ impl<'a> Model<'a> for Heisenberg {
 
     fn new<L: Lattice>(l: &'a L) -> Self {
         let mut spin_configuration: Vec<HeisenbergSpin> = Vec::new();
+        let x = l.get_sites();
 
-        for site in l.get_sites() {
+        for site in x {
             let mut h = HeisenbergSpin::new();
             h.normalize();
-//            site.set_occupant(Box::new(h))
+            site.borrow_mut().set_occupant(Box::new(h))
         }
 
         let exchange_matrix = ExchangeMatrix::ferromagnetic_exchange(10);

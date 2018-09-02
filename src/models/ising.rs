@@ -56,7 +56,8 @@ impl<'a> Model<'a> for Ising<'a> {
     }
 
     fn get_energy(&self) -> f64 {
-        for site in self.lattice.get_sites() {
+        let x = self.lattice.get_sites();
+        for site in x {
 //            println!("{}", site.get_neighbors())
         }
 

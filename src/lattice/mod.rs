@@ -9,7 +9,7 @@ pub struct Site {
     y: f64,
     z: f64,
     occupant: Option<Box<Spin>>,
-    neighbors: RefCell<Vec<Weak<Site>>>,
+    neighbors: RefCell<Vec<Weak<RefCell<Site>>>>,
 }
 
 pub trait Spin {
@@ -17,9 +17,8 @@ pub trait Spin {
 }
 
 impl Site {
-    pub fn get_neighbors(self: &Self) -> RefCell<Vec<Weak<Site>>> {
-        unimplemented!()
-//        return self.neighbors;
+    pub fn get_neighbors(self: &Self) -> &RefCell<Vec<Weak<RefCell<Site>>>> {
+        return &self.neighbors;
     }
 
     pub fn set_occupant(self: &mut Self, spin: Box<Spin>) {
@@ -36,7 +35,7 @@ impl fmt::Display for Site {
 pub trait Lattice: fmt::Display {
     fn new(n_x: i32, n_y: i32) -> Self where Self: Sized;
     fn get_area(self: &Self) -> i32;
-    fn get_sites(self: &Self) -> &Vec<Rc<Site>>;
+    fn get_sites(self: &Self) -> &Vec<Rc<RefCell<Site>>>;
 }
 
 pub mod square;
