@@ -1,5 +1,6 @@
 use lattice::Lattice;
 use plot::CartesianPoint;
+use lattice::Spin;
 
 pub struct Observables {
     pub average_energy: f64,
@@ -9,10 +10,11 @@ pub struct Observables {
     pub spin_states: Vec<CartesianPoint>,
 }
 
-pub trait Model<'a> {
-    fn new<L: Lattice>(l: &'a L) -> Self where Self: Sized;
+pub trait Model<'a, L> {
+    fn new(l: &'a L) -> Self where Self: Sized;
     fn flip_spin(&mut self) -> &Self;
     fn get_energy(&self) -> f64;
+    fn new_spin() -> Spin;
     fn measure(&self) -> Observables;
 }
 

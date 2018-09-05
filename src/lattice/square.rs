@@ -4,6 +4,7 @@ use std::rc::Weak;
 use std::fmt;
 use std::cell::RefCell;
 
+#[derive(Clone)]
 pub struct Square {
     sites: Vec<Rc<RefCell<Site>>>,
     x_width: i32,

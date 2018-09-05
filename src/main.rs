@@ -7,21 +7,23 @@ extern crate serde_derive;
 mod models;
 mod lattice;
 mod plot;
+
 use models::Model;
+use models::heisenberg::{Heisenberg};
+use models::ising::{Ising};
 
 use lattice::{Lattice, square};
 
 
 fn main() {
+    hb();
 
-//    hb();
-
-    ising();
+//    ising();
 }
 
 fn hb() {
-    let lat2: square::Square = Lattice::new(4, 4);
-    let mut hb: models::heisenberg::Heisenberg = models::heisenberg::Heisenberg::new(&lat2);
+    let lat2: square::Square = square::Square::new(4, 4);
+    let mut hb = models::heisenberg::Heisenberg::new(&lat2);
 
     for _ in 0..1000 {
         let mut active_hb = hb.clone();
@@ -43,6 +45,5 @@ fn ising() {
 
     println!("{}", lat);
 
-    let mut model: models::ising::Ising = models::Model::new(&lat);
-
+    let mut model: Ising<square::Square> = models::Model::new(&lat);
 }

@@ -4,51 +4,28 @@ use std::fmt;
 use std::ops::Neg;
 use models::{Model, Observables};
 use self::rand::Rng;
+use lattice::Spin;
 use lattice::Lattice;
 
-
 #[derive(Clone)]
-pub struct IsingSpin {
-    value: f64
+pub struct Ising<'a, L: 'a> {
+    lattice: &'a L,
 }
 
-impl IsingSpin {
-    pub fn new() -> IsingSpin {
+impl<'a, L: Lattice> Model<'a, L> for Ising<'a, L> {
+    fn new(lattice: &'a L) -> Self {
+//        let mut spin_configuration: Vec<IsingSpin> = Vec::new();
+
+//        for _i in 0..lattice.get_area() {
+//            spin_configuration.push(IsingSpin::new());
+//        }
+
+        return Ising { lattice };
+    }
+
+    fn new_spin() -> Spin {
         let mut rng = rand::thread_rng();
-        IsingSpin { value: (2 * rng.gen_range(0, 2)) as f64 - 1.0 }
-    }
-}
-
-impl Neg for IsingSpin {
-    type Output = Self;
-    fn neg(self) -> Self {
-        IsingSpin { value: -self.value }
-    }
-}
-
-impl fmt::Display for IsingSpin {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "({})", self.value)
-    }
-}
-
-#[derive(Clone)]
-pub struct Ising<'a> {
-    spin_configuration: Vec<IsingSpin>,
-    lattice: &'a Lattice,
-}
-
-impl<'a> Model<'a> for Ising<'a> {
-    fn new<L: Lattice>(lattice: &'a L) -> Self {
-        let mut spin_configuration: Vec<IsingSpin> = Vec::new();
-
-        for _i in 0..lattice.get_area() {
-            spin_configuration.push(IsingSpin::new());
-        }
-
-        let mut i: Ising = Ising { spin_configuration, lattice };
-
-        return i;
+        return Spin { x: 0.0, y: 0.0, z: ((2 * rng.gen_range(0, 2)) - 1) as f64 };
     }
 
     fn flip_spin(&mut self) -> &Self {
