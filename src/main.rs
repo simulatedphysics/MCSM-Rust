@@ -9,8 +9,8 @@ mod lattice;
 mod plot;
 
 use models::Model;
-use models::heisenberg::{Heisenberg};
-use models::ising::{Ising};
+use models::heisenberg::Heisenberg;
+use models::ising::Ising;
 
 use lattice::{Lattice, square};
 
@@ -25,7 +25,7 @@ fn hb() {
     let lat2: square::Square = square::Square::new(4, 4);
     let mut hb = models::heisenberg::Heisenberg::new(&lat2);
 
-    for _ in 0..1000 {
+    for _ in 0..200000 {
         let mut active_hb = hb.clone();
 
         let pre_flip_energy = active_hb.get_energy();

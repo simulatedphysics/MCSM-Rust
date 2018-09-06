@@ -60,12 +60,12 @@ impl Site {
         return &self.neighbors;
     }
 
-    pub fn set_occupant(self: &mut Self, spin: Spin) {
+    pub fn set_spin(self: &mut Self, spin: Spin) {
         self.occupant = Some(spin)
     }
 
-    pub fn get_occupant<'a>(self: Self) -> Spin {
-        return self.occupant.unwrap();
+    pub fn get_spin(&self) -> &Option<Spin> {
+        return &self.occupant;
     }
 }
 
@@ -84,8 +84,8 @@ impl fmt::Display for Site {
 
 pub trait Lattice: fmt::Display {
     fn new(n_x: i32, n_y: i32) -> Self where Self: Sized;
-    fn get_area(self: &Self) -> i32;
-    fn get_sites(self: &Self) -> &Vec<Rc<RefCell<Site>>>;
+    fn get_area(&self) -> i32;
+    fn get_sites(&self) -> &Vec<Rc<RefCell<Site>>>;
 }
 
 pub mod square;

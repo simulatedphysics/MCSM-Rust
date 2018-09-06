@@ -62,7 +62,7 @@ impl<'a, L: Lattice> Model<'a, L> for Heisenberg<'a, L> {
 
         let mut sites = self.lattice.get_sites();
 
-        sites[rng.gen_range(0, sites.len() - 1) as usize].borrow_mut().set_occupant(h);
+        sites[rng.gen_range(0, sites.len() - 1) as usize].borrow_mut().set_spin(h);
 
         return self;
     }
@@ -70,12 +70,11 @@ impl<'a, L: Lattice> Model<'a, L> for Heisenberg<'a, L> {
     fn get_energy(&self) -> f64 {
         let mut energy: f64 = 0.0;
 
-        let sites = self.lattice.get_sites();
-        for i in 0..10 {
-            for j in 0..10 {
+        for (i, site1) in self.lattice.get_sites().iter().enumerate() {
+            for (j, site2) in self.lattice.get_sites().iter().enumerate() {
                 energy +=
-                    sites[i].borrow_mut().get_occupant().dot(
-                        &sites[j].borrow_mut().get_occupant()
+                    site1.borrow().get_spin().as_ref().unwrap().dot(
+                        site2.borrow().get_spin().as_ref().unwrap()
                     ) * self.exchange_matrix.select_mat(i, j)
             }
         }
@@ -90,10 +89,10 @@ impl<'a, L: Lattice> Model<'a, L> for Heisenberg<'a, L> {
         for site in x {
             let mut h = Self::new_spin();
             h.normalize();
-            site.borrow_mut().set_occupant(h)
+            site.borrow_mut().set_spin(h)
         }
 
-        let exchange_matrix = ExchangeMatrix::ferromagnetic_exchange(10);
+        let exchange_matrix = ExchangeMatrix::ferromagnetic_exchange(l.get_area() as usize);
 
         return Heisenberg { lattice: l, exchange_matrix };
     }
