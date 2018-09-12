@@ -10,7 +10,7 @@ use std::cell::RefCell;
 use lattice::{Lattice, Spin};
 use std::f64;
 use plot::CartesianPoint;
-use models::{Model, Observables};
+use models::{Model, Observables, StateChange};
 use std::rc::Rc;
 use self::num_complex::Complex;
 use self::rulinalg::matrix::{Matrix, BaseMatrix};
@@ -55,16 +55,38 @@ impl<'a, L: Lattice> Model<'a, L> for Heisenberg<'a, L> {
         return Spin { x: rng.gen::<f64>(), y: rng.gen::<f64>(), z: rng.gen::<f64>() };
     }
 
-    fn flip_spin(&mut self) -> &Self {
+    /*
+
+    -- let i1 = init ising
+    for n... 10000 {
+        -- let i2 = i1.clone()
+
+        -- let change_in_energy = i2.flip_spin()
+
+
+        if change_in_energy < 0:
+            i1 = i2
+        }
+
+
+    */
+
+    fn flip_spin(&mut self) -> StateChange<Self> {
         let mut rng = rand::thread_rng();
-        let mut h = Self::new_spin();
-        h.normalize();
 
         let mut sites = self.lattice.get_sites();
 
-        sites[rng.gen_range(0, sites.len() - 1) as usize].borrow_mut().set_spin(h);
+        let random_site_index = rng.gen_range(0, sites.len() - 1) as usize;
 
-        return self;
+
+        let mut h = Self::new_spin();
+        h.normalize();
+
+        return StateChange {
+            model: self,
+            new_spin: h,
+            index: random_site_index,
+        };
     }
 
     fn get_energy(&self) -> f64 {
@@ -95,6 +117,10 @@ impl<'a, L: Lattice> Model<'a, L> for Heisenberg<'a, L> {
         let exchange_matrix = ExchangeMatrix::ferromagnetic_exchange(l.get_area() as usize);
 
         return Heisenberg { lattice: l, exchange_matrix };
+    }
+
+    fn change_in_energy(index: usize, new_spin: Spin) -> f64 {
+        return 0.0;
     }
 
     fn measure(&self) -> Observables {
